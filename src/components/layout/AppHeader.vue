@@ -48,7 +48,7 @@ export default {
     line-height: 18px;
     margin: 0;
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 14px 0 0 70px;
     background: transparent url(../../assets/logo.png) no-repeat;
     background-position: 10px 5px;
@@ -61,7 +61,7 @@ export default {
     small {
       font-size: .9rem;
       display: inline-block;
-      letter-spacing: 7.5px;
+      letter-spacing: 7.7px;
       text-transform: uppercase;
       font-weight: 300;
       padding-left: 1px;
