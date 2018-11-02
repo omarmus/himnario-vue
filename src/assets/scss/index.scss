@@ -1,0 +1,23 @@
+@import './normalize.scss';
+@import './_variables.scss';
+@import './modules/index.scss';
+@import './_icon.scss';
+@import './_fonts.scss';
+
+body {
+  font-family: 'Poppins', Arial, serif, serif-sans;
+  background-color: lighten($primary, 35%);
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+.icon {
+  font-size: 1rem;
+  font-style: normal;
+}
+
+.grid {
+  display: grid;
+}
