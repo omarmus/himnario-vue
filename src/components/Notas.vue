@@ -112,7 +112,7 @@ import time from '@/lib/time'
 import util from '@/lib/util'
 
 // const url = process.env.BASE_URL
-const url = 'http://localhost:4000/'
+const url = process.env.API_URL
 
 export default {
   mixins: [ time, util ],
@@ -151,23 +151,6 @@ export default {
   mounted () {
     this.loadHimnos()
     this.events()
-    setTimeout(() => {
-      this.mostrar(1)
-      document.querySelector('#search-input').focus()
-    }, 1000)
-
-    // Fullscreen event and hack mozilla
-    document.addEventListener('onkeyup', function (e) {
-      if (e.keyCode === 27) {
-        document.querySelector('body').classList.remove('fullscreen')
-      }
-    })
-
-    document.addEventListener('mozfullscreenchange', function () {
-      if (!document.mozFullScreen) {
-        document.querySelector('body').classList.remove('fullscreen')
-      }
-    }, false)
   },
   methods: {
     fullscreenAction () {
@@ -199,10 +182,10 @@ export default {
         if (key === 27) { // Escape
           this.search = ''
         }
-        if (key === 171) { // zoom +
+        if (key === 171 || key === 187) { // zoom +
           this.zoomOut()
         }
-        if (key === 173) { // zoom -
+        if (key === 173 || key === 189) { // zoom -
           this.zoomIn()
         }
         if (key === 38) { // up
@@ -215,6 +198,24 @@ export default {
 
       document.addEventListener('touchstart', this.handleTouchStart, false)
       document.addEventListener('touchmove', this.handleTouchMove, false)
+
+      setTimeout(() => {
+        this.mostrar(1)
+        document.querySelector('#search-input').focus()
+      }, 500)
+
+      // Fullscreen event and hack mozilla
+      document.addEventListener('onkeyup', function (e) {
+        if (e.keyCode === 27) {
+          document.querySelector('body').classList.remove('fullscreen')
+        }
+      })
+
+      document.addEventListener('mozfullscreenchange', function () {
+        if (!document.mozFullScreen) {
+          document.querySelector('body').classList.remove('fullscreen')
+        }
+      }, false)
     },
     upSelect () {
       let himnos = document.querySelector('#himnos')

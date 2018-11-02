@@ -12,6 +12,7 @@
         :class="{ 'btn-success': tipo === 'NOTAS'}">NOTAS</button>
       <button
         type="button"
+        disabled
         @click="cambiar('LETRAS')"
         class="btn"
         :class="{ 'btn-success': tipo === 'LETRAS'}">LETRAS</button>
