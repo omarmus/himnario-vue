@@ -38,6 +38,7 @@ export default {
 
 <style lang="scss">
 @import '../../assets/scss/_variables.scss';
+
 .header {
   background-color: $primary;
   height: 60px;
@@ -83,6 +84,21 @@ export default {
 body.fullscreen {
   .header {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    h1 {
+      font-size: 1rem;
+      padding-left: 10px;
+      padding-top: 13px;
+      background-image: none;
+
+      small {
+        display: none;
+      }
+    }
   }
 }
 </style>

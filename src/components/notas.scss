@@ -140,7 +140,7 @@ body.fullscreen {
   .audio-state {
     position: absolute;
     top: 5px;
-    right: -1px;
+    right: 0;
     font-size: .75rem;
     padding: 3px 8px 1px;
     background-color: rgba(255, 255, 255, .9);
@@ -332,6 +332,10 @@ body.fullscreen {
       .btn-actions {
         margin-top: 10px;
         text-align: center;
+
+        .btn:first-child {
+          margin-left: 0;
+        }
       }
 
       .input-container {
@@ -349,11 +353,4 @@ body.fullscreen {
       }
     }
   }
-
-  .header {
-    h1 {
-      font-size: 1.2rem;
-    }
-  }
-
 }

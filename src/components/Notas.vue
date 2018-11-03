@@ -202,7 +202,7 @@ export default {
       setTimeout(() => {
         this.mostrar(1)
         document.querySelector('#search-input').focus()
-      }, 500)
+      }, 1000)
 
       // Fullscreen event and hack mozilla
       document.addEventListener('onkeyup', function (e) {
@@ -310,8 +310,10 @@ export default {
       }
       this.number = number
       this.showState = false
+      this.$store.commit('showLoading')
       axios.get(`${url}api/read-image/${number}`)
         .then(response => {
+          this.$store.commit('hideLoading')
           if (response.data) {
             this.image = null
             this.image2 = null
