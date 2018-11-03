@@ -301,7 +301,7 @@ export default {
         }
       }
     },
-    mostrar (number) {
+    mostrar (number = 1) {
       if (number < 1) {
         number = 1
       }
@@ -311,7 +311,7 @@ export default {
       this.number = number
       this.showState = false
       this.$store.commit('showLoading')
-      axios.get(`${url}api/read-image/${number}`)
+      axios.get(`${url}api/read-image/${number || 1}`)
         .then(response => {
           this.$store.commit('hideLoading')
           if (response.data) {
