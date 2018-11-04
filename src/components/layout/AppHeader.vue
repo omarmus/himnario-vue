@@ -49,7 +49,7 @@ export default {
     line-height: 18px;
     margin: 0;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 400;
     padding: 14px 0 0 70px;
     background: transparent url(../../assets/logo.png) no-repeat;
     background-position: 10px 5px;
@@ -62,7 +62,7 @@ export default {
     small {
       font-size: .9rem;
       display: inline-block;
-      letter-spacing: 7.7px;
+      letter-spacing: 7.2px;
       text-transform: uppercase;
       font-weight: 300;
       padding-left: 1px;
