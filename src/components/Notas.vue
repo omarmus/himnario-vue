@@ -123,7 +123,7 @@ export default {
       image: null,
       image2: null,
       limit: 10,
-      number: 0,
+      number: 1,
       play: false,
       urlMp3: null,
       audio: null,
@@ -311,7 +311,7 @@ export default {
       this.number = number
       this.showState = false
       this.$store.commit('showLoading')
-      axios.get(`${url}api/read-image/${number || 1}`)
+      axios.get(`${url}api/read-image/${number}`)
         .then(response => {
           this.$store.commit('hideLoading')
           if (response.data) {

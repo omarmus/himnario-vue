@@ -353,4 +353,9 @@ body.fullscreen {
       }
     }
   }
+  .search.stick, body.fullscreen .search {
+    & + .preview {
+      margin-top: 100px;
+    }
+  }
 }

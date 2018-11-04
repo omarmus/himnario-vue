@@ -73,11 +73,15 @@ export default {
     text-align: right;
     padding: 11px 15px 0 0px;
   }
+
+  .btn {
+    margin-left: 2px;
+  }
 }
 
 .grid {
   &.grid-header {
-    grid-template-columns: 1fr 190px;
+    grid-template-columns: 1fr 200px;
   }
 }
 
@@ -98,6 +102,10 @@ body.fullscreen {
       small {
         display: none;
       }
+    }
+
+    .btn {
+      padding: 10px 8px;
     }
   }
 }
