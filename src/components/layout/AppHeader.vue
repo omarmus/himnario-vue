@@ -1,9 +1,6 @@
 <template>
   <header class="header grid grid-header">
-    <h1>
-      Himnario Internacional SMI<br>
-      <small>Movimiento de Reforma</small>
-    </h1>
+    <h1>Himnario SMI</h1>
     <div class="himnario-tipo">
       <button
         type="button"
@@ -50,10 +47,10 @@ export default {
     margin: 0;
     font-size: 1.5rem;
     font-weight: 400;
-    padding: 14px 0 0 70px;
-    background: transparent url(../../assets/logo.png) no-repeat;
-    background-position: 10px 5px;
-    background-size: auto 90%;
+    padding: 20px 0 0 55px;
+    background: transparent url(../../../public/img/icons/windows/windowsphone-storelogo-70-70.png) no-repeat;
+    background-position: 6px 7px;
+    background-size: auto 80%;
 
     .pull-right {
       margin: 12px 15px 0 0;
@@ -94,18 +91,21 @@ body.fullscreen {
 @media (max-width: 768px) {
   .header {
     h1 {
-      font-size: 1rem;
-      padding-left: 10px;
-      padding-top: 13px;
-      background-image: none;
-
-      small {
-        display: none;
-      }
+      font-size: 1.2rem;
+      padding-top: 21px;
+      padding-left: 48px;
+      background-size: auto 70%;
+      background-position: 6px 10px;
     }
 
     .btn {
       padding: 10px 8px;
+    }
+  }
+
+  .grid {
+    &.grid-header {
+      grid-template-columns: 1fr 170px;
     }
   }
 }

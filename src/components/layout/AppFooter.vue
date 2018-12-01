@@ -10,7 +10,7 @@
   bottom: 0;
   right: 0;
   padding: 5px 10px;
-  font-size: .75rem;
+  font-size: .7rem;
   background-color: rgba(255, 255, 255, .6);
   border-radius: 10px 0 0 0;
 

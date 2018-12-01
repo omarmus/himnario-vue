@@ -13,8 +13,8 @@
             autocomplete="off"
             autofocus
             @keydown="alpha($event)"
-            placeholder="Escribe el nombre o número de un himno"
-            v-model="search">
+            placeholder="Escribe el nombre o número de himno a buscar"
+            v-model="search" />
           <ul
             id="himnos"
             class="search-items"
@@ -95,13 +95,13 @@
         class="image image-1"
         :class="classZoom"
         v-if="image"
-        alt="preview" />
+        alt="Cargando..." />
       <img
         :src="image2"
         class="image image-2"
         :class="classZoom"
         v-if="image2"
-        alt="preview 2" />
+        alt="" />
     </div>
   </section>
 </template>
@@ -164,10 +164,15 @@ export default {
       }
     },
     loadHimnos () {
-      axios.get(`${url}api-rest/himnos?limit=1000`)
-        .then(response => {
-          this.himnos = response.data
-        })
+      if (this.$storage.exist('himnos')) {
+        this.himnos = this.$storage.get('himnos')
+      } else {
+        axios.get(`${url}api-rest/himnos?limit=1000`)
+          .then(response => {
+            this.himnos = response.data
+            this.$storage.set('himnos', this.himnos)
+          })
+      }
     },
     events () {
       document.addEventListener('keyup', e => {
@@ -301,6 +306,14 @@ export default {
         }
       }
     },
+    searchHimno (number) {
+      for (let i in this.himnos) {
+        if (this.himnos[i].number === number) {
+          return this.himnos[i]
+        }
+      }
+      return false
+    },
     mostrar (number = 1) {
       if (number < 1) {
         number = 1
@@ -311,30 +324,25 @@ export default {
       this.number = number
       this.showState = false
       this.$store.commit('showLoading')
-      axios.get(`${url}api/read-image/${number}`)
-        .then(response => {
-          this.$store.commit('hideLoading')
-          if (response.data) {
-            this.image = null
-            this.image2 = null
-            this.search = ''
-            this.urlMp3 = null
-            this.showState = true
-            this.$nextTick(() => {
-              let file = (this.number + '').padStart(3, '0')
-              this.urlMp3 = `${url}mp3/${file}.mp3`
-              this.resetTrack()
-              this.zoom = 960
-              if (response.data.image1) {
-                this.image = response.data.image1
-                this.image2 = response.data.image2
-              } else {
-                this.image = response.data.image
-                this.image2 = null
-              }
-            })
-          }
-        })
+      let himno = this.searchHimno(this.number)
+      this.image = null
+      this.image2 = null
+      this.search = ''
+      this.urlMp3 = null
+      this.$nextTick(() => {
+        this.$store.commit('hideLoading')
+        this.showState = true
+        let file = (this.number + '').padStart(3, '0')
+        if (himno.pages === 1) {
+          this.image = `${url}scores/${file}.png`
+        } else {
+          this.image = `${url}scores/${file}a.png`
+          this.image2 = `${url}scores/${file}b.png`
+        }
+        this.urlMp3 = `${url}mp3/${file}.mp3`
+        this.resetTrack()
+        this.zoom = 960
+      })
     },
     buscar () {
       let himnos = document.querySelector('#himnos')
