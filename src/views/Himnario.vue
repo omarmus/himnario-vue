@@ -1,13 +1,11 @@
 <template>
   <section>
-    <notas v-if="tipo === 'NOTAS'"></notas>
-    <letras v-if="tipo === 'LETRAS'"></letras>
+    <buscador></buscador>
   </section>
 </template>
 
 <script>
-import Notas from '@/components/Notas'
-import Letras from '@/components/Letras'
+import Buscador from '@/components/Buscador'
 
 export default {
   data () {
@@ -16,8 +14,7 @@ export default {
     }
   },
   components: {
-    Notas,
-    Letras
+    Buscador
   }
 }
 </script>

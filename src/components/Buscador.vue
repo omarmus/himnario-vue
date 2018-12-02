@@ -89,6 +89,7 @@
         </div>
       </div>
     </div>
+    <letras :number="number" v-if="showHimno"></letras>
     <div class="preview">
       <img
         :src="image"
@@ -110,6 +111,7 @@
 import axios from 'axios'
 import time from '@/lib/time'
 import util from '@/lib/util'
+import Letras from '@/components/Letras'
 
 // const url = process.env.BASE_URL
 const url = process.env.API_URL
@@ -118,6 +120,7 @@ export default {
   mixins: [ time, util ],
   data () {
     return {
+      showHimno: false,
       himnos: [],
       search: '',
       image: null,
@@ -141,7 +144,7 @@ export default {
       stick: false
     }
   },
-  components: {},
+  components: { Letras },
   created () {
     window.addEventListener('scroll', this.handleScroll)
   },
@@ -321,15 +324,19 @@ export default {
       if (number > this.himnos.length) {
         number = this.himnos.length
       }
-      this.number = number
+      this.showHimno = false
       this.showState = false
       this.$store.commit('showLoading')
-      let himno = this.searchHimno(this.number)
+      let himno = this.searchHimno(number)
       this.image = null
       this.image2 = null
       this.search = ''
       this.urlMp3 = null
+
       this.$nextTick(() => {
+        this.number = number
+        this.showHimno = true
+
         this.$store.commit('hideLoading')
         this.showState = true
         let file = (this.number + '').padStart(3, '0')
