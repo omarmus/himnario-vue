@@ -6,12 +6,12 @@
         type="button"
         @click="cambiar('NOTAS')"
         class="btn"
-        :class="{ 'btn-success': tipo === 'NOTAS'}">NOTAS</button>
+        :class="{ 'btn-success': $store.state.tipo === 'NOTAS'}">NOTAS</button>
       <button
         type="button"
         @click="cambiar('LETRAS')"
         class="btn"
-        :class="{ 'btn-success': tipo === 'LETRAS'}">LETRAS</button>
+        :class="{ 'btn-success': $store.state.tipo === 'LETRAS'}">LETRAS</button>
     </div>
   </header>
 </template>
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     cambiar (tipo) {
-      this.tipo = tipo
+      this.$store.commit('setTipo', tipo)
     }
   }
 }
@@ -90,10 +90,10 @@ body.fullscreen {
 @media (max-width: 768px) {
   .header {
     h1 {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       padding-top: 21px;
-      padding-left: 48px;
-      background-size: auto 70%;
+      padding-left: 42px;
+      background-size: auto 60%;
       background-position: 6px 10px;
     }
 
@@ -104,7 +104,7 @@ body.fullscreen {
 
   .grid {
     &.grid-header {
-      grid-template-columns: 1fr 170px;
+      grid-template-columns: 1fr 160px;
     }
   }
 }

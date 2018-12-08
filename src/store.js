@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    loading: false
+    loading: false,
+    tipo: 'NOTAS'
   },
   mutations: {
     showLoading (state) {
@@ -13,6 +14,9 @@ export default new Vuex.Store({
     },
     hideLoading (state) {
       state.loading = false
+    },
+    setTipo (state, tipo) {
+      state.tipo = tipo
     }
   },
   actions: {

@@ -89,20 +89,22 @@
         </div>
       </div>
     </div>
-    <letras :number="number" v-if="showHimno"></letras>
     <div class="preview">
-      <img
-        :src="image"
-        class="image image-1"
-        :class="classZoom"
-        v-if="image"
-        alt="Cargando..." />
-      <img
-        :src="image2"
-        class="image image-2"
-        :class="classZoom"
-        v-if="image2"
-        alt="" />
+      <letras :number="number" v-if="showHimno" v-show="$store.state.tipo === 'LETRAS'"></letras>
+      <div v-show="$store.state.tipo === 'NOTAS'">
+        <img
+          :src="image"
+          class="image image-1"
+          :class="classZoom"
+          v-if="image"
+          alt="Cargando..." />
+        <img
+          :src="image2"
+          class="image image-2"
+          :class="classZoom"
+          v-if="image2"
+          alt="" />
+      </div>
     </div>
   </section>
 </template>
@@ -441,4 +443,4 @@ export default {
 }
 </script>
 
-<style lang="scss" src="./notas.scss"></style>
+<style lang="scss" src="./buscador.scss"></style>
