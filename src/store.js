@@ -6,7 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loading: false,
-    tipo: 'NOTAS'
+    tipo: 'NOTAS',
+    himno: null,
+    position: 0
   },
   mutations: {
     showLoading (state) {
@@ -17,9 +19,18 @@ export default new Vuex.Store({
     },
     setTipo (state, tipo) {
       state.tipo = tipo
+    },
+    setHimno (state, himno)  {
+      state.himno = himno
+    },
+    setPosition (state, position) {
+      state.position = position
+    },
+    addPosition (state) {
+      state.position++
+    },
+    lessPosition (state) {
+      state.position--
     }
-  },
-  actions: {
-
   }
 })

@@ -6,12 +6,17 @@
         type="button"
         @click="cambiar('NOTAS')"
         class="btn"
-        :class="{ 'btn-success': $store.state.tipo === 'NOTAS'}">NOTAS</button>
+        :class="{ 'btn-success': $store.state.tipo === 'NOTAS'}">N</button>
       <button
         type="button"
         @click="cambiar('LETRAS')"
         class="btn"
-        :class="{ 'btn-success': $store.state.tipo === 'LETRAS'}">LETRAS</button>
+        :class="{ 'btn-success': $store.state.tipo === 'LETRAS'}">L</button>
+      <button
+        type="button"
+        @click="cambiar('DIAPOSITIVAS')"
+        class="btn"
+        :class="{ 'btn-success': $store.state.tipo === 'DIAPOSITIVAS'}">D</button>
     </div>
   </header>
 </template>
@@ -38,6 +43,7 @@ export default {
 .header {
   background-color: $primary;
   height: 60px;
+  position: relative;
 
   h1 {
     color: white;
@@ -77,7 +83,7 @@ export default {
 
 .grid {
   &.grid-header {
-    grid-template-columns: 1fr 200px;
+    grid-template-columns: 1fr 220px;
   }
 }
 

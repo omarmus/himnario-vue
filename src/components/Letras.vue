@@ -1,31 +1,29 @@
 <template>
-  <section class="himno">
-    <h2 class="himno-title">{{ detalle.number }}. {{ detalle.title }}</h2>
-    <div class="himno-detalle grid grid-detalle" v-if="detalle">
-      <div class="text-left">
-        <span v-if="detalle.author"><strong>Autor:</strong> {{ detalle.author }} <br></span>
-        <span v-if="detalle.arranger"><strong>Arreglo:</strong> {{ detalle.arranger }} <br></span>
-        <span v-if="detalle.adapted"><strong>Adaptación:</strong> {{ detalle.adapted }}</span>
-      </div>
-      <div class="text-right">
-        <span v-if="detalle.tone"><strong>Tono:</strong> {{ detalle.tone }} <br></span>
-        <span v-if="detalle.traductor"><strong>Traductor:</strong> {{ detalle.traductor }} <br></span>
-        <span v-if="detalle.reference"><strong>Referencia:</strong> {{ detalle.reference }}</span>
-      </div>
-    </div>
+  <section class="himno" v-if="detalle">
+    <detalle></detalle>
     <div
-      v-for="detalle in himno"
+      v-for="detalle in letra"
       :key="detalle.id"
       class="himno-estrofa">
       <strong v-if="detalle.type === 'STROPHE'">{{ detalle.order }}. </strong>
       <strong v-else><em>Coro: </em><br></strong>
-      <span v-html="detalle.content" :class="{ 'himno-coro': detalle.type !== 'STROPHE' }"></span>
+      <span
+        v-if="detalle.type === 'STROPHE'"
+        v-html="detalle.content">
+      </span>
+      <strong
+        v-else
+        v-html="detalle.content"
+        class="himno-coro">
+      </strong>
     </div>
   </section>
 </template>
 
 <script>
 import axios from 'axios'
+import Detalle from './Detalle'
+
 const url = process.env.API_URL
 
 export default {
@@ -37,7 +35,7 @@ export default {
   },
   data () {
     return {
-      himno: [],
+      letra: [],
       detalle: null
     }
   },
@@ -51,17 +49,25 @@ export default {
     cargarHimno (number) {
       let himnos = this.$storage.get('himnos')
       this.detalle = himnos.filter(item => item.number === number)[0]
+      let himno = {
+        detalle: this.detalle
+      }
       axios.get(`${url}api/detalle/${number}`)
         .then(response => {
-          let himno = response.data
-          himno.map(item => {
+          let letra = response.data
+          letra.map(item => {
             item.content = item.content.replace(/\n/gi, '<br />')
             return item
           })
-          this.himno = himno
+          this.letra = letra
+          himno.letra = letra
+          this.$store.commit('setHimno', himno)
           this.$storage.set('himno', this.himno)
         })
     }
+  },
+  components: {
+    Detalle
   }
 }
 </script>
@@ -73,17 +79,6 @@ export default {
   margin: 0 auto;
   background-color: #ffffff;
   padding: 30px;
-}
-
-.himno-title {
-  margin: 0 0 10px;
-  font-size: 1.5rem;
-  text-align: center;
-}
-
-.himno-detalle {
-  font-size: .8rem;
-  margin-bottom: 20px;
 }
 .himno-estrofa {
   margin-bottom: 15px;

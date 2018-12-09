@@ -1,7 +1,7 @@
 module.exports = {
   pluginOptions:{
     env: {
-      API_URL: 'http://192.169.1.10:4000/'
+      API_URL: 'http://localhost:4000/'
     }
   }
 }

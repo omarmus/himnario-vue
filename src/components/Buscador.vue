@@ -90,7 +90,12 @@
       </div>
     </div>
     <div class="preview">
-      <letras :number="number" v-if="showHimno" v-show="$store.state.tipo === 'LETRAS'"></letras>
+      <diapositivas v-show="$store.state.tipo === 'DIAPOSITIVAS'"></diapositivas>
+      <letras
+        :number="number"
+        v-if="showHimno"
+        v-show="$store.state.tipo === 'LETRAS'">
+      </letras>
       <div v-show="$store.state.tipo === 'NOTAS'">
         <img
           :src="image"
@@ -114,6 +119,7 @@ import axios from 'axios'
 import time from '@/lib/time'
 import util from '@/lib/util'
 import Letras from '@/components/Letras'
+import Diapositivas from '@/components/Diapositivas'
 
 // const url = process.env.BASE_URL
 const url = process.env.API_URL
@@ -146,7 +152,10 @@ export default {
       stick: false
     }
   },
-  components: { Letras },
+  components: {
+    Letras,
+    Diapositivas
+  },
   created () {
     window.addEventListener('scroll', this.handleScroll)
   },
@@ -351,6 +360,7 @@ export default {
         this.urlMp3 = `${url}mp3/${file}.mp3`
         this.resetTrack()
         this.zoom = 960
+        this.$store.commit('setPosition', 0)
       })
     },
     buscar () {
