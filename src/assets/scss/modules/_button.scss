@@ -118,6 +118,13 @@ button:-moz-focusring,
   margin-top: 10px;
 }
 
+.btn-link {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
 // @media (max-width: 768px) {
 //   .btn {
 //     width: 100%;

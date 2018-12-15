@@ -1,36 +1,41 @@
 <template>
   <div class="diapositiva">
     <div class="diapositiva-container">
-      <h2 class="diapositiva-title">{{ title }}</h2>
+      <h2 class="diapositiva-title" v-if="$store.state.position">{{ title }}</h2>
       <div
         v-if="estrofa"
         class="diapositiva-letra">
-        <strong v-if="estrofa.type === 'STROPHE'">{{ estrofa.order }}. </strong>
-        <strong v-else><em>Coro: </em><br></strong>
+        <strong v-if="estrofa.type === 'STROPHE'" class="diapositiva-number">{{ estrofa.order }}. </strong>
+        <strong v-if="estrofa.type === 'CHORUS'"><em>Coro: </em><br></strong>
         <span
           v-if="estrofa.type === 'STROPHE'"
           v-html="estrofa.content">
         </span>
+        <strong
+          v-if="estrofa.type === 'TITLE'"
+          class="diapositiva-title-main"
+          v-html="estrofa.content">
+        </strong>
         <span
-          v-else
+          v-if="estrofa.type === 'CHORUS'"
           v-html="estrofa.content"
-          class="himno-coro">
+          class="diapositiva-coro">
         </span>
       </div>
       <div class="diapositiva-buttons" v-if="letra">
         <button
           type="button"
-          class="btn"
+          class="btn-link"
           :disabled="$store.state.position === 0"
           title="Anterior"
-          @click="prev"><i class="icon-arrow-left"></i>
+          @click="prev"><i class="icon-circle-left"></i>
         </button>
         <button
           type="button"
-          class="btn"
+          class="btn-link"
           :disabled="$store.state.position === letra.length - 1"
           title="Siguiente"
-          @click="next"><i class="icon-arrow-right"></i>
+          @click="next"><i class="icon-circle-right"></i>
         </button>
       </div>
     </div>
@@ -38,7 +43,6 @@
 </template>
 
 <script>
-import Detalle from './Detalle'
 
 export default {
   data () {
@@ -80,7 +84,7 @@ export default {
     letra () {
       if (this.$store.state.himno) {
         let letra = this.$store.state.himno.letra
-        let diapositiva = []
+        let diapositiva = [{ content: this.title, type: 'TITLE' }]
         let coro = null
         for (let i in letra) {
           if (letra[i].type === 'CHORUS') {
@@ -97,15 +101,14 @@ export default {
       }
       return []
     }
-  },
-  components: {
-    Detalle
   }
 }
 </script>
 
 <style lang="scss">
 @import '../assets/scss/_variables.scss';
+
+$link: lighten($warning, 10%);
 
 .diapositiva {
   position: relative;
@@ -115,14 +118,34 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
+
+  .btn-link {
+    &:disabled,
+    &[disabled] {
+      cursor: not-allowed;
+
+      i {
+        color: darken($warning, 35%);
+      }
+    }
+
+    i {
+      color: $warning;
+      font-size: 3.2rem;
+    }
+  }
 }
 .diapositiva-title {
-  color: lighten($warning, 10%);
+  color: $link;
   font-size: 1.2rem;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
+}
+.diapositiva-title-main {
+  font-size: 4rem;
+  color: $link;
 }
 .diapositiva-container {
   padding: 50px 20px 20px 20px;
@@ -132,11 +155,17 @@ export default {
 }
 .diapositiva-letra {
   font-size: 2.4rem;
-  line-height: 2.8rem;
+  // line-height: 2.8rem;
 }
 .diapositiva-buttons {
   position: absolute;
   right: 20px;
   bottom: 25px;
+}
+.diapositiva-number {
+  color: $link;
+}
+.diapositiva-coro {
+  color: $link;
 }
 </style>

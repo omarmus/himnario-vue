@@ -1,5 +1,6 @@
 <template>
-  <div v-if="detalle" class="himno-title">{{ detalle.number }}. {{ detalle.title }}</h2>
+  <div v-if="detalle">
+    <h2 class="himno-title">{{ detalle.number }}. {{ detalle.title }}</h2>
     <div class="himno-detalle grid grid-detalle" v-if="detalle">
       <div class="text-left">
         <span v-if="detalle.author"><strong>Autor:</strong> {{ detalle.author }} <br></span>

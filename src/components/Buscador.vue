@@ -61,8 +61,8 @@
             @click="fullscreenAction"
             title="Ampliar/disminuir pantalla"
             class="btn btn-fullscreen">
-            <i class="icon-fullscreen-in"></i>
-            <i class="icon-fullscreen-out"></i>
+            <i class="icon-enlarge"></i>
+            <i class="icon-shrink"></i>
           </button>
           <button
             type="button"

@@ -20,7 +20,7 @@ export default new Vuex.Store({
     setTipo (state, tipo) {
       state.tipo = tipo
     },
-    setHimno (state, himno)  {
+    setHimno (state, himno) {
       state.himno = himno
     },
     setPosition (state, position) {

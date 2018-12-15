@@ -6,17 +6,20 @@
         type="button"
         @click="cambiar('NOTAS')"
         class="btn"
-        :class="{ 'btn-success': $store.state.tipo === 'NOTAS'}">N</button>
+        title="Notas"
+        :class="{ 'btn-success': $store.state.tipo === 'NOTAS'}"><i class="icon-music"></i></button>
       <button
         type="button"
         @click="cambiar('LETRAS')"
         class="btn"
-        :class="{ 'btn-success': $store.state.tipo === 'LETRAS'}">L</button>
+        title="Letras"
+        :class="{ 'btn-success': $store.state.tipo === 'LETRAS'}"><i class="icon-text-color"></i></button>
       <button
         type="button"
         @click="cambiar('DIAPOSITIVAS')"
         class="btn"
-        :class="{ 'btn-success': $store.state.tipo === 'DIAPOSITIVAS'}">D</button>
+        title="Presentación"
+        :class="{ 'btn-success': $store.state.tipo === 'DIAPOSITIVAS'}"><i class="icon-film"></i></button>
     </div>
   </header>
 </template>
@@ -78,6 +81,12 @@ export default {
 
   .btn {
     margin-left: 2px;
+    padding: 12px 15px 8px 10px;
+    min-width: 52px;
+
+    i {
+      font-size: 1.3rem;
+    }
   }
 }
 
