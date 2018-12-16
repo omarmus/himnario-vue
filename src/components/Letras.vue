@@ -52,6 +52,7 @@ export default {
       let himno = {
         detalle: this.detalle
       }
+      this.$store.commit('showLoading')
       axios.get(`${url}api/detalle/${number}`)
         .then(response => {
           let letra = response.data
@@ -63,6 +64,7 @@ export default {
           himno.letra = letra
           this.$store.commit('setHimno', himno)
           this.$storage.set('himno', this.himno)
+          this.$store.commit('hideLoading')
         })
     }
   },

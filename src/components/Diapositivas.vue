@@ -1,10 +1,11 @@
 <template>
-  <div class="diapositiva">
-    <div class="diapositiva-container">
+  <div class="diapositiva" id="diapositiva">
+    <div class="diapositiva-container" v-if="!$store.state.loading">
       <h2 class="diapositiva-title" v-if="$store.state.position">{{ title }}</h2>
       <div
         v-if="estrofa"
-        class="diapositiva-letra">
+        class="diapositiva-letra"
+        :style="{ 'font-size': fontSize }">
         <strong v-if="estrofa.type === 'STROPHE'" class="diapositiva-number">{{ estrofa.order }}. </strong>
         <strong v-if="estrofa.type === 'CHORUS'"><em>Coro: </em><br></strong>
         <span
@@ -48,7 +49,8 @@ export default {
   data () {
     return {
       position: 0,
-      diapositivas: []
+      diapositivas: [],
+      fontSize: '12px'
     }
   },
   methods: {
@@ -68,7 +70,21 @@ export default {
       if (this.letra) {
         let letra = this.letra[this.$store.state.position]
         if (letra) {
-          letra.content = letra.content.replace(/\n/gi, '<br />')
+          if (this.$store.state.position) {
+            var diapositiva = document.getElementById('diapositiva')
+            var el = diapositiva.getBoundingClientRect()
+            let size = letra.content.match(/<br \/>/gi)
+            if (size) {
+              size = size.length + (letra.type === 'CHORUS' ? 2 : 1)
+              let fontSize = (((el.height - 100) / size) - 10)
+              console.log('font-size original', size, fontSize, letra.type)
+              if (fontSize > 60) {
+                fontSize = 60
+              }
+              this.fontSize = fontSize + 'px'
+            }
+            console.log('font-size', this.fontSize, el.height)
+          }
         }
         return letra
       }
@@ -151,10 +167,10 @@ $link: lighten($warning, 10%);
   padding: 50px 20px 20px 20px;
   margin: 0 auto;
   width: 100%;
-  max-width: 960px;
+  // max-width: 960px;
 }
 .diapositiva-letra {
-  font-size: 2.4rem;
+  // font-size: 2.4rem;
   // line-height: 2.8rem;
 }
 .diapositiva-buttons {
