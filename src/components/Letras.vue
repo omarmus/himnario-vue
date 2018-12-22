@@ -81,6 +81,8 @@ export default {
   margin: 0 auto;
   background-color: #ffffff;
   padding: 30px;
+  min-height: 100%;
+  // height: 100%;
 }
 .himno-estrofa {
   margin-bottom: 15px;

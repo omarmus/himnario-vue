@@ -7,19 +7,25 @@
         @click="cambiar('NOTAS')"
         class="btn"
         title="Notas"
-        :class="{ 'btn-success': $store.state.tipo === 'NOTAS'}"><i class="icon-music"></i></button>
+        :class="{ 'btn-success': $store.state.tipo === 'NOTAS'}">
+          <i class="icon-music"></i> <span>NOTAS</span>
+      </button>
       <button
         type="button"
         @click="cambiar('LETRAS')"
         class="btn"
         title="Letras"
-        :class="{ 'btn-success': $store.state.tipo === 'LETRAS'}"><i class="icon-text-color"></i></button>
+        :class="{ 'btn-success': $store.state.tipo === 'LETRAS'}">
+          <i class="icon-text-color"></i> <span>LETRAS</span>
+      </button>
       <button
         type="button"
         @click="cambiar('DIAPOSITIVAS')"
         class="btn"
         title="Presentación"
-        :class="{ 'btn-success': $store.state.tipo === 'DIAPOSITIVAS'}"><i class="icon-film"></i></button>
+        :class="{ 'btn-success': $store.state.tipo === 'DIAPOSITIVAS'}">
+          <i class="icon-film"></i> <span>DIAPOSITIVAS</span>
+      </button>
     </div>
   </header>
 </template>
@@ -87,12 +93,18 @@ export default {
     i {
       font-size: 1.3rem;
     }
+
+    span {
+      display: inline-block;
+      margin: 0 0 0 5px;
+      vertical-align: top;
+    }
   }
 }
 
 .grid {
   &.grid-header {
-    grid-template-columns: 1fr 220px;
+    grid-template-columns: 1fr 410px;
   }
 }
 

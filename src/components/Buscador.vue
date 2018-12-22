@@ -8,7 +8,7 @@
           <input
             id="search-input"
             type="search"
-            class="search-input"
+            class="search-input input-round"
             maxlength="20"
             autocomplete="off"
             autofocus
@@ -35,24 +35,24 @@
         <div class="btn-actions">
           <button
             type="button"
-            class="btn"
+            class="btn btn-icon"
             title="Reproducir"
             @click="playAndPause"><i :class="iconAudio"></i></button>
           <button
             type="button"
-            class="btn"
+            class="btn btn-icon"
             title="Reducir"
             @click="zoomIn"
-            :disabled="zoom === zoomMin"
+            :disabled="zoom === zoomMin || $store.state.tipo === 'DIAPOSITIVAS'"
           >
             <i class="icon-zoom-out"></i>
           </button>
           <button
             type="button"
-            class="btn"
+            class="btn btn-icon"
             title="Ampliar"
             @click="zoomOut"
-            :disabled="zoom === zoomMax"
+            :disabled="zoom === zoomMax || $store.state.tipo === 'DIAPOSITIVAS'"
           >
             <i class="icon-zoom-in"></i>
           </button>
@@ -60,20 +60,20 @@
             type="button"
             @click="fullscreenAction"
             title="Ampliar/disminuir pantalla"
-            class="btn btn-fullscreen">
+            class="btn btn-icon btn-fullscreen">
             <i class="icon-enlarge"></i>
             <i class="icon-shrink"></i>
           </button>
           <button
             type="button"
-            class="btn"
+            class="btn btn-icon"
             :disabled="number === 1 || number === 0"
             title="Anterior"
             @click="prev"><i class="icon-arrow-left"></i>
           </button>
           <button
             type="button"
-            class="btn"
+            class="btn btn-icon"
             :disabled="number === himnos.length"
             title="Siguiente"
             @click="next"><i class="icon-arrow-right"></i>

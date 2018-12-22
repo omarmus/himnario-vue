@@ -23,6 +23,9 @@
           class="diapositiva-coro">
         </span>
       </div>
+      <div class="diapositiva-state">
+        {{ $store.state.position + 1 }} de {{ letra.length }}
+      </div>
       <div class="diapositiva-buttons" v-if="letra">
         <button
           type="button"
@@ -63,6 +66,9 @@ export default {
       if (this.$store.state.position < this.letra.length - 1) {
         this.$store.commit('addPosition')
       }
+    },
+    setFontSize (size) {
+      this.fontSize = size
     }
   },
   computed: {
@@ -81,7 +87,7 @@ export default {
               if (fontSize > 60) {
                 fontSize = 60
               }
-              this.fontSize = fontSize + 'px'
+              this.setFontSize(fontSize + 'px')
             }
             console.log('font-size', this.fontSize, el.height)
           }
@@ -173,9 +179,16 @@ $link: lighten($warning, 10%);
   // font-size: 2.4rem;
   // line-height: 2.8rem;
 }
+.diapositiva-state {
+  position: absolute;
+  left: 25px;
+  bottom: 25px;
+  color: $link;
+  font-size: 1.8rem;
+}
 .diapositiva-buttons {
   position: absolute;
-  right: 20px;
+  right: 25px;
   bottom: 25px;
 }
 .diapositiva-number {
