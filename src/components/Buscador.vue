@@ -378,13 +378,21 @@ export default {
       this.mostrar(this.number - 1)
     },
     zoomIn () {
-      if (this.zoom > this.zoomMin) {
-        this.zoom -= this.zoomStep
+      if (this.$store.state.tipo === 'DIAPOSITIVAS') {
+        this.$store.commit('zoomLIn')
+      } else {
+        if (this.zoom > this.zoomMin) {
+          this.zoom -= this.zoomStep
+        }
       }
     },
     zoomOut () {
-      if (this.zoom < this.zoomMax) {
-        this.zoom += this.zoomStep
+      if (this.$store.state.tipo === 'DIAPOSITIVAS') {
+        this.$store.commit('zoomLOut')
+      } else {
+        if (this.zoom < this.zoomMax) {
+          this.zoom += this.zoomStep
+        }
       }
     },
     getTouches (evt) {

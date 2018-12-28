@@ -104,7 +104,7 @@ export default {
 
 .grid {
   &.grid-header {
-    grid-template-columns: 1fr 410px;
+    grid-template-columns: 1fr 420px;
   }
 }
 

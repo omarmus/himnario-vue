@@ -8,7 +8,10 @@ export default new Vuex.Store({
     loading: false,
     tipo: 'NOTAS',
     himno: null,
-    position: 0
+    position: 0,
+    zoomL: 3,
+    zoomN: 3,
+    action: null
   },
   mutations: {
     showLoading (state) {
@@ -31,6 +34,22 @@ export default new Vuex.Store({
     },
     lessPosition (state) {
       state.position--
+    },
+    setAction (state, action) {
+      state.action = action
+    },
+    zoomLIn (state) {
+      if (state.zoomL)
+      state.zoomL--
+    },
+    zoooLOut (state) {
+      state.zoomL++
+    },
+    zoomNIn (state) {
+      state.zoomN--
+    },
+    zoooLOut (state) {
+      state.zoomN++
     }
   }
 })

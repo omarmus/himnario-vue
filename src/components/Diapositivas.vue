@@ -56,6 +56,9 @@ export default {
       fontSize: '12px'
     }
   },
+  mounted () {
+    this.events()
+  },
   methods: {
     prev () {
       if (this.$store.state.position > 0) {
@@ -69,6 +72,18 @@ export default {
     },
     setFontSize (size) {
       this.fontSize = size
+    },
+    events () {
+      document.addEventListener('keyup', e => {
+        let key = e.keyCode
+        console.log('keyD', key)
+
+        if (this.$store.state.tipo === 'DIAPOSITIVAS') {
+          if (key === 32) { // space
+            this.next()
+          }
+        }
+      })
     }
   },
   computed: {
