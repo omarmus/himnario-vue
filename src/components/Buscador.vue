@@ -378,8 +378,8 @@ export default {
       this.mostrar(this.number - 1)
     },
     zoomIn () {
-      if (this.$store.state.tipo === 'DIAPOSITIVAS') {
-        this.$store.commit('zoomLIn')
+      if (this.$store.state.tipo === 'NOTAS') {
+        this.$store.commit('setAction', 'zoomIn')
       } else {
         if (this.zoom > this.zoomMin) {
           this.zoom -= this.zoomStep
@@ -387,8 +387,8 @@ export default {
       }
     },
     zoomOut () {
-      if (this.$store.state.tipo === 'DIAPOSITIVAS') {
-        this.$store.commit('zoomLOut')
+      if (this.$store.state.tipo === 'NOTAS') {
+        this.$store.commit('setAction', 'zoomOut')
       } else {
         if (this.zoom < this.zoomMax) {
           this.zoom += this.zoomStep
