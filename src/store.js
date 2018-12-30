@@ -37,19 +37,6 @@ export default new Vuex.Store({
     },
     setAction (state, action) {
       state.action = action
-    },
-    zoomLIn (state) {
-      if (state.zoomL)
-      state.zoomL--
-    },
-    zoooLOut (state) {
-      state.zoomL++
-    },
-    zoomNIn (state) {
-      state.zoomN--
-    },
-    zoooLOut (state) {
-      state.zoomN++
     }
   }
 })

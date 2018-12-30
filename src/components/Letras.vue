@@ -4,7 +4,8 @@
     <div
       v-for="detalle in letra"
       :key="detalle.id"
-      class="himno-estrofa">
+      class="himno-estrofa"
+      :class="classZoom">
       <strong v-if="detalle.type === 'STROPHE'">{{ detalle.order }}. </strong>
       <strong v-else><em>Coro: </em><br></strong>
       <span
@@ -36,7 +37,11 @@ export default {
   data () {
     return {
       letra: [],
-      detalle: null
+      detalle: null,
+      zoom: 4,
+      zoomStep: 1,
+      zoomMin: 1,
+      zoomMax: 7
     }
   },
   mounted () {
@@ -66,6 +71,35 @@ export default {
           this.$storage.set('himno', this.himno)
           this.$store.commit('hideLoading')
         })
+    },
+    zoomIn () {
+      console.log('zoomIn', this.zoom, this.classZoom)
+      if (this.zoom > this.zoomMin) {
+        this.zoom -= this.zoomStep
+      }
+    },
+    zoomOut () {
+      console.log('zoomOut', this.zoom, this.classZoom)
+      if (this.zoom < this.zoomMax) {
+        this.zoom += this.zoomStep
+      }
+    }
+  },
+  computed: {
+    classZoom () {
+      return `zoom-n-${this.zoom}`
+    }
+  },
+  watch: {
+    '$store.state.action' (val) {
+      if (val) {
+        if (val === 'zoomNIn') {
+          this.zoomIn()
+        } else if (val === 'zoomNOut') {
+          this.zoomOut()
+        }
+        this.$store.commit('setAction', null)
+      }
     }
   },
   components: {
@@ -84,16 +118,47 @@ export default {
   min-height: 100%;
   // height: 100%;
 }
+
 .himno-estrofa {
   margin-bottom: 15px;
 }
+
 .grid {
   &.grid-detalle {
     grid-template-columns: 1fr 1fr;
   }
 }
+
 .himno-coro {
   font-style: italic;
+}
+
+.zoom-n-1 {
+  font-size: 9px;
+}
+
+.zoom-n-2 {
+  font-size: 10px;
+}
+
+.zoom-n-3 {
+  font-size: 12px;
+}
+
+.zoom-n-4 {
+  font-size: 14px;
+}
+
+.zoom-n-5 {
+  font-size: 16px;
+}
+
+.zoom-n-6 {
+  font-size: 20px;
+}
+
+.zoom-n-7 {
+  font-size: 26px;
 }
 
 @media (max-width: 768px) {

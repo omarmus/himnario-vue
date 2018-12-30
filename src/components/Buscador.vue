@@ -43,7 +43,7 @@
             class="btn btn-icon"
             title="Reducir"
             @click="zoomIn"
-            :disabled="zoom === zoomMin || $store.state.tipo === 'DIAPOSITIVAS'"
+            :disabled="(zoom <= zoomMin && $store.state.tipo === 'NOTAS') || $store.state.tipo === 'DIAPOSITIVAS'"
           >
             <i class="icon-zoom-out"></i>
           </button>
@@ -52,7 +52,7 @@
             class="btn btn-icon"
             title="Ampliar"
             @click="zoomOut"
-            :disabled="zoom === zoomMax || $store.state.tipo === 'DIAPOSITIVAS'"
+            :disabled="(zoom >= zoomMax && $store.state.tipo === 'NOTAS') || $store.state.tipo === 'DIAPOSITIVAS'"
           >
             <i class="icon-zoom-in"></i>
           </button>
@@ -378,8 +378,8 @@ export default {
       this.mostrar(this.number - 1)
     },
     zoomIn () {
-      if (this.$store.state.tipo === 'NOTAS') {
-        this.$store.commit('setAction', 'zoomIn')
+      if (this.$store.state.tipo === 'LETRAS') {
+        this.$store.commit('setAction', 'zoomNIn')
       } else {
         if (this.zoom > this.zoomMin) {
           this.zoom -= this.zoomStep
@@ -387,28 +387,28 @@ export default {
       }
     },
     zoomOut () {
-      if (this.$store.state.tipo === 'NOTAS') {
-        this.$store.commit('setAction', 'zoomOut')
+      if (this.$store.state.tipo === 'LETRAS') {
+        this.$store.commit('setAction', 'zoomNOut')
       } else {
         if (this.zoom < this.zoomMax) {
           this.zoom += this.zoomStep
         }
       }
     },
-    getTouches (evt) {
-      return evt.touches || evt.originalEvent.touches // browser API | jQuery
+    getTouches (e) {
+      return e.touches || e.originalEvent.touches // browser API | jQuery
     },
-    handleTouchStart (evt) {
-      this.xDown = this.getTouches(evt)[0].clientX
-      this.yDown = this.getTouches(evt)[0].clientY
+    handleTouchStart (e) {
+      this.xDown = this.getTouches(e)[0].clientX
+      this.yDown = this.getTouches(e)[0].clientY
     },
-    handleTouchMove (evt) {
+    handleTouchMove (e) {
       if (!this.xDown || !this.yDown) {
         return
       }
 
-      let xUp = evt.touches[0].clientX
-      let yUp = evt.touches[0].clientY
+      let xUp = e.touches[0].clientX
+      let yUp = e.touches[0].clientY
 
       let xDiff = this.xDown - xUp
       let yDiff = this.yDown - yUp
