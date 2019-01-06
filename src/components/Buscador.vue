@@ -401,6 +401,8 @@ export default {
     handleTouchStart (e) {
       this.xDown = this.getTouches(e)[0].clientX
       this.yDown = this.getTouches(e)[0].clientY
+
+      console.log('start', this.xDown, this.yDown)
     },
     handleTouchMove (e) {
       if (!this.xDown || !this.yDown) {
@@ -413,11 +415,18 @@ export default {
       let xDiff = this.xDown - xUp
       let yDiff = this.yDown - yUp
 
+      console.log('move', xDiff, yDiff)
+
       if (Math.abs(xDiff) > Math.abs(yDiff)) { /* most significant */
+        const width = document.body.getBoundingClientRect().width
         if (xDiff > 0) {
-          this.next()
+          if (this.xDown > width - width / 4) {
+            this.next()
+          }
         } else {
-          this.prev()
+          if (this.xDown < width / 4) {
+            this.prev()
+          }
         }
       } else {
         if (yDiff > 0) {
