@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section :class="{ 'close-search': !openSearch }">
     <div
       class="search"
       :class="{ stick: stick }">
@@ -88,6 +88,12 @@
           {{ currentTime }} / {{ formatTime(duration) }}
         </div>
       </div>
+      <div
+        class="open-search"
+        @click="openSearch = !openSearch">
+        <i class="icon-play"></i>
+        <!-- {{ openSearch ? 'Ocultar' : 'Mostrar' }} -->
+      </div>
     </div>
     <div class="preview">
       <diapositivas v-show="$store.state.tipo === 'DIAPOSITIVAS'"></diapositivas>
@@ -124,6 +130,9 @@ import Diapositivas from '@/components/Diapositivas'
 // const url = process.env.BASE_URL
 const url = process.env.API_URL
 
+const zoom = [1860, 1760, 1660, 1560, 1460, 1360, 1260, 1160, 1060, 960, 860, 760, 660, 560, 460, 360,
+260];
+
 export default {
   mixins: [ time, util ],
   data () {
@@ -149,7 +158,8 @@ export default {
       zoomMax: 1800,
       xDown: null,
       yDown: null,
-      stick: false
+      stick: false,
+      openSearch: true
     }
   },
   components: {
@@ -356,11 +366,19 @@ export default {
         } else {
           this.image = `${url}scores/${file}a.png`
           this.image2 = `${url}scores/${file}b.png`
+
+          // const width = document.body.getBoundingClientRect().width / 2
+          // for (let i in zoom) {
+          //   if (zoom[i]) {
+          //     break
+          //   }
+          // }
         }
         this.urlMp3 = `${url}mp3/${file}.mp3`
         this.resetTrack()
         this.zoom = 960
         this.$store.commit('setPosition', 0)
+        this.openSearch = false
       })
     },
     buscar () {
