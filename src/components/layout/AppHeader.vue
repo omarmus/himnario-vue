@@ -150,5 +150,11 @@ body.fullscreen {
       grid-template-columns: 1fr 160px;
     }
   }
+
+  .himnario-tipo {
+    .btn span {
+      display: none;
+    }
+  }
 }
 </style>
