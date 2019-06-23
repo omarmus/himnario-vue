@@ -399,7 +399,7 @@ body.fullscreen {
       padding-right: 0;
 
       .btn-actions {
-        margin-top: 5px;
+        // margin-top: 5px;
         text-align: center;
 
         .btn:first-child {
@@ -412,6 +412,7 @@ body.fullscreen {
 
         .search-input {
           font-size: 1rem;
+          line-height: 34px;
         }
       }
     }
@@ -421,6 +422,7 @@ body.fullscreen {
         font-size: 1rem;
       }
     }
+
   }
   .search.stick, body.fullscreen .search {
     & + .preview {

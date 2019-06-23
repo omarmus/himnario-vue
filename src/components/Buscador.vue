@@ -90,7 +90,7 @@
       </div>
       <div
         class="open-search"
-        @click="openSearch = !openSearch">
+        @click="openSearchEvent">
         <i class="icon-play"></i>
         <!-- {{ openSearch ? 'Ocultar' : 'Mostrar' }} -->
       </div>
@@ -127,11 +127,9 @@ import util from '@/lib/util'
 import Letras from '@/components/Letras'
 import Diapositivas from '@/components/Diapositivas'
 
-// const url = process.env.BASE_URL
 const url = process.env.API_URL
 
-const zoom = [1860, 1760, 1660, 1560, 1460, 1360, 1260, 1160, 1060, 960, 860, 760, 660, 560, 460, 360,
-260];
+const zoom = [1860, 1760, 1660, 1560, 1460, 1360, 1260, 1160, 1060, 960, 860, 760, 660, 560, 460, 360, 260]
 
 export default {
   mixins: [ time, util ],
@@ -177,6 +175,13 @@ export default {
     this.events()
   },
   methods: {
+    openSearchEvent () {
+      this.openSearch = !this.openSearch
+
+      if (this.openSearch) {
+        document.getElementById('search-input').focus()
+      }
+    },
     fullscreenAction () {
       document.querySelector('body').classList.toggle('fullscreen')
       this.fullscreen()
@@ -367,12 +372,12 @@ export default {
           this.image = `${url}scores/${file}a.png`
           this.image2 = `${url}scores/${file}b.png`
 
-          // const width = document.body.getBoundingClientRect().width / 2
-          // for (let i in zoom) {
-          //   if (zoom[i]) {
-          //     break
-          //   }
-          // }
+          const width = document.body.getBoundingClientRect().width / 2
+          for (let i in zoom) {
+            if (width > zoom[i]) {
+              break
+            }
+          }
         }
         this.urlMp3 = `${url}mp3/${file}.mp3`
         this.resetTrack()

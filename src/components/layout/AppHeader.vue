@@ -116,16 +116,32 @@ body.fullscreen {
 
 @media (max-width: 768px) {
   .header {
+    height: 48px;
+
     h1 {
       font-size: 1.1rem;
-      padding-top: 21px;
+      padding-top: 15px;
       padding-left: 42px;
       background-size: auto 60%;
-      background-position: 6px 10px;
+      background-position: 5px 6px;
     }
 
     .btn {
-      padding: 10px 8px;
+      padding: 8px 0;
+      margin: 0 1px;
+      min-width: 42px;
+
+      i {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+    }
+
+    .himnario-tipo {
+      padding: 6px 8px 0 0;
+      span {
+        display: none;
+      }
     }
   }
 
