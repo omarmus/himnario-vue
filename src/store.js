@@ -3,9 +3,12 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const messageDefault = 'Cargando...'
+
 export default new Vuex.Store({
   state: {
     loading: false,
+    loadingMessage: messageDefault,
     tipo: 'NOTAS',
     himno: null,
     position: 0,
@@ -14,11 +17,13 @@ export default new Vuex.Store({
     action: null
   },
   mutations: {
-    showLoading (state) {
+    showLoading (state, message) {
       state.loading = true
+      state.loadingMessage = message || messageDefault
     },
     hideLoading (state) {
       state.loading = false
+      state.loadingMessage = null
     },
     setTipo (state, tipo) {
       state.tipo = tipo

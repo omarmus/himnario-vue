@@ -1,6 +1,6 @@
 <template>
   <div class="loading">
-    <div class="loading__text">Cargando página</div>
+    <div class="loading__text">{{ $store.state.loadingMessage }}</div>
   </div>
 </template>
 

@@ -97,14 +97,23 @@ export default {
             let size = letra.content.match(/<br \/>/gi)
             if (size) {
               size = size.length + (letra.type === 'CHORUS' ? 2 : 1)
-              let fontSize = (((el.height - 100) / size) - 10)
-              console.log('font-size original', size, fontSize, letra.type)
+              let fontSize = ((el.height - 100) / size) - 10
+              // console.log('font-size original', size, fontSize, letra.type)
               if (fontSize > 60) {
                 fontSize = 60
               }
+              if (window.outerWidth <= 768) {
+                fontSize = fontSize - 5
+                if (fontSize > 25) {
+                  fontSize = 24
+                }
+                if (fontSize < 20) {
+                  fontSize = 20
+                }
+              }
               this.setFontSize(fontSize + 'px')
             }
-            console.log('font-size', this.fontSize, el.height)
+            // console.log('font-size', this.fontSize, el.height)
           }
         }
         return letra
@@ -190,10 +199,10 @@ $link: lighten($warning, 10%);
   width: 100%;
   // max-width: 960px;
 }
-.diapositiva-letra {
-  // font-size: 2.4rem;
-  // line-height: 2.8rem;
-}
+// .diapositiva-letra {
+//   // font-size: 2.4rem;
+//   // line-height: 2.8rem;
+// }
 .diapositiva-state {
   position: absolute;
   left: 25px;
@@ -211,5 +220,28 @@ $link: lighten($warning, 10%);
 }
 .diapositiva-coro {
   color: $link;
+}
+
+@media (max-width: 768px) {
+  .diapositiva {
+    height: calc(100vh - 138px);
+
+    .btn-link i {
+      font-size: 2rem;
+    }
+  }
+  .diapositiva-container {
+    padding: 10px;
+  }
+  .diapositiva-title-main {
+    font-size: 2.6rem;
+  }
+  .diapositiva-state {
+    font-size: 1.2rem;
+  }
+  .diapositiva-buttons {
+    right: 10px;
+    bottom: 10px;
+  }
 }
 </style>

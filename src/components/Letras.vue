@@ -29,9 +29,17 @@ const url = process.env.API_URL
 
 export default {
   props: {
+    db: {
+      type: Object,
+      default: () => {}
+    },
     number: {
       type: Number,
       default: 0
+    },
+    himnos: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
@@ -45,32 +53,43 @@ export default {
     }
   },
   mounted () {
-    console.log('number letra', this.number)
     if (this.number) {
       this.cargarHimno(this.number)
     }
   },
   methods: {
-    cargarHimno (number) {
-      let himnos = this.$storage.get('himnos')
-      this.detalle = himnos.filter(item => item.number === number)[0]
+    async cargarHimno (number) {
+      this.detalle = this.himnos.filter(item => item.number === number)[0]
       let himno = {
         detalle: this.detalle
       }
-      this.$store.commit('showLoading')
-      axios.get(`${url}api/detalle/${number}`)
-        .then(response => {
-          let letra = response.data
-          letra.map(item => {
-            item.content = item.content.replace(/\n/gi, '<br />')
-            return item
-          })
-          this.letra = letra
-          himno.letra = letra
-          this.$store.commit('setHimno', himno)
-          this.$storage.set('himno', this.himno)
-          this.$store.commit('hideLoading')
+      if (this.db && this.db.detail) {
+        let letra = await this.db.detail.find(number, 'id_hymn')
+        letra.map(item => {
+          item.content = item.content.replace(/\n/gi, '<br />')
+          return item
         })
+        this.letra = letra
+        himno.letra = letra
+        this.$store.commit('setHimno', himno)
+        this.$storage.set('himno', this.himno)
+        this.$store.commit('hideLoading')
+      } else {
+        this.$store.commit('showLoading', `Cargando himno #${number}`)
+        axios.get(`${url}api/detalle/${number}`)
+          .then(response => {
+            let letra = response.data
+            letra.map(item => {
+              item.content = item.content.replace(/\n/gi, '<br />')
+              return item
+            })
+            this.letra = letra
+            himno.letra = letra
+            this.$store.commit('setHimno', himno)
+            this.$storage.set('himno', this.himno)
+            this.$store.commit('hideLoading')
+          })
+      }
     },
     zoomIn () {
       console.log('zoomIn', this.zoom, this.classZoom)
@@ -134,31 +153,31 @@ export default {
 }
 
 .zoom-n-1 {
-  font-size: 9px;
+  font-size: 0.7rem;
 }
 
 .zoom-n-2 {
-  font-size: 10px;
+  font-size: 0.8rem;
 }
 
 .zoom-n-3 {
-  font-size: 12px;
+  font-size: 0.9rem;
 }
 
 .zoom-n-4 {
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .zoom-n-5 {
-  font-size: 16px;
+  font-size: 1.2rem;
 }
 
 .zoom-n-6 {
-  font-size: 20px;
+  font-size: 1.4rem;
 }
 
 .zoom-n-7 {
-  font-size: 26px;
+  font-size: 1.6rem;
 }
 
 @media (max-width: 768px) {

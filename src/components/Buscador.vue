@@ -96,9 +96,14 @@
       </div>
     </div>
     <div class="preview">
-      <diapositivas v-show="$store.state.tipo === 'DIAPOSITIVAS'"></diapositivas>
+      <diapositivas
+        v-if="showHimno"
+        v-show="$store.state.tipo === 'DIAPOSITIVAS'">
+      </diapositivas>
       <letras
+        :db="db"
         :number="number"
+        :himnos="himnos"
         v-if="showHimno"
         v-show="$store.state.tipo === 'LETRAS'">
       </letras>
@@ -126,6 +131,7 @@ import time from '@/lib/time'
 import util from '@/lib/util'
 import Letras from '@/components/Letras'
 import Diapositivas from '@/components/Diapositivas'
+import db from '../services/db'
 
 const url = process.env.API_URL
 
@@ -157,7 +163,8 @@ export default {
       xDown: null,
       yDown: null,
       stick: false,
-      openSearch: true
+      openSearch: true,
+      db: null
     }
   },
   components: {
@@ -171,10 +178,19 @@ export default {
     window.removeEventListener('scroll', this.handleScroll)
   },
   mounted () {
-    this.loadHimnos()
     this.events()
+    this.initDatabase()
   },
   methods: {
+    async initDatabase () {
+      try {
+        this.db = await db.init()
+        this.loadHimnos()
+      } catch (error) {
+        console.error('Error init database!', error)
+        this.loadHimnos()
+      }
+    },
     openSearchEvent () {
       this.openSearch = !this.openSearch
 
@@ -192,21 +208,54 @@ export default {
         return false
       }
     },
-    loadHimnos () {
-      if (this.$storage.exist('himnos')) {
-        this.himnos = this.$storage.get('himnos')
-      } else {
-        axios.get(`${url}api-rest/himnos?limit=1000`)
-          .then(response => {
-            this.himnos = response.data
-            this.$storage.set('himnos', this.himnos)
-          })
+    async loadHimnosServicio () {
+      try {
+        this.$store.commit('showLoading', 'Cargando himnos')
+        let result = await axios.get(`${url}api-rest/himnos?limit=1000`)
+        this.$store.commit('hideLoading')
+        this.himnos = result.data
+        if (this.db) {
+          await this.db.hymn.bulkInsert(result.data)
+        }
+        this.loadEstrofas()
+      } catch (e) {
+        console.log('Error get hymns', e.message)
       }
+    },
+    async loadHimnos () {
+      if (this.db) {
+        let hymns = await this.db.hymn.getAll()
+        if (hymns.length) {
+          this.himnos = hymns
+          this.loadEstrofas()
+        } else {
+          await this.loadHimnosServicio()
+        }
+      } else {
+        await this.loadHimnosServicio()
+      }
+    },
+    async loadEstrofas () {
+      if (this.db) {
+        let estrofas = await this.db.detail.getAll()
+        if (estrofas.length === 0) {
+          try {
+            this.$store.commit('showLoading', 'Completando carga de himnos')
+            let result = await axios.get(`${url}api-rest/details?limit=5000`)
+            this.$store.commit('hideLoading')
+            await this.db.detail.bulkInsert(result.data)
+            // console.log('get details', result.data)
+          } catch (e) {
+            console.log('Error get details', e.message)
+          }
+        }
+      }
+      // Mostrando el primer himno
+      this.mostrar(1)
     },
     events () {
       document.addEventListener('keyup', e => {
         let key = e.keyCode
-        console.log(e.keyCode, e)
         if (key === 37) { // left
           this.prev()
         }
@@ -234,7 +283,6 @@ export default {
       document.addEventListener('touchmove', this.handleTouchMove, false)
 
       setTimeout(() => {
-        this.mostrar(1)
         document.querySelector('#search-input').focus()
       }, 1000)
 
@@ -425,7 +473,7 @@ export default {
       this.xDown = this.getTouches(e)[0].clientX
       this.yDown = this.getTouches(e)[0].clientY
 
-      console.log('start', this.xDown, this.yDown)
+      // console.log('start', this.xDown, this.yDown)
     },
     handleTouchMove (e) {
       if (!this.xDown || !this.yDown) {
@@ -438,7 +486,7 @@ export default {
       let xDiff = this.xDown - xUp
       let yDiff = this.yDown - yUp
 
-      console.log('move', xDiff, yDiff)
+      // console.log('move', xDiff, yDiff)
 
       if (Math.abs(xDiff) > Math.abs(yDiff)) { /* most significant */
         const width = document.body.getBoundingClientRect().width
@@ -465,7 +513,8 @@ export default {
       this.yDown = null
     },
     handleScroll () {
-      this.stick = window.scrollY > 60
+      let widthMin = window.outerWidth > 768 ? 60 : 48
+      this.stick = window.scrollY > widthMin
     }
   },
   computed: {

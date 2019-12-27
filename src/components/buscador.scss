@@ -6,6 +6,10 @@ $width: 960px;
 
   & > section {
     height: 100%;
+    position: relative;
+  }
+  .preview {
+    padding-top: 55px;
   }
 }
 
@@ -35,6 +39,11 @@ body.fullscreen {
 
   .buscador {
     height: 100%;
+
+    .close-search {
+      padding-top: 0;
+      transition: all ease .3s;
+    }
   }
 
   .open-search {
@@ -48,6 +57,8 @@ body.fullscreen {
   }
 
   .close-search {
+    transition: all ease .3s;
+
     .search {
       transform: translateY(-55px);
       transition: all ease .3s;
@@ -106,21 +117,18 @@ body.fullscreen {
   left: 0;
   right: 0;
   z-index: 10;
-  transition: all .4s ease;
+  transition: all .3s ease;
   box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
-
-  & + .preview {
-    transition: all ease .3s;
-    padding-top: 56px;
-    height: 100%;
-  }
 }
 
 .search {
   background-color: white;
   padding: 5px 0;
-  position: relative;
-  box-shadow: 0 0 6px rgba(0, 0, 0, .2);
+  position: absolute;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  left: 0;
+  top: 0;
+  right: 0;
 
   .search-container {
     position: relative;
@@ -144,11 +152,11 @@ body.fullscreen {
         }
       }
 
-      .btn {
+      // .btn {
         // padding: 5px;
         // min-width: 50px;
         // margin: 0 0 0 4px;
-      }
+      // }
     }
   }
 
@@ -241,6 +249,10 @@ body.fullscreen {
       z-index: 2;
     }
   }
+}
+
+.himno-estrofa {
+  line-height: 1.4;
 }
 
 .zoom-1860 {
@@ -387,6 +399,16 @@ body.fullscreen {
 }
 
 @media (max-width: 768px) {
+  .buscador {
+    .preview {
+      padding-top: 90px;
+    }
+
+    .search {
+      padding: 5px 0 0 0;
+    }
+  }
+
   .grid {
     &.grid-search {
       grid-template-columns: 1fr;
@@ -399,7 +421,6 @@ body.fullscreen {
       padding-right: 0;
 
       .btn-actions {
-        // margin-top: 5px;
         text-align: center;
 
         .btn:first-child {
@@ -424,9 +445,14 @@ body.fullscreen {
     }
 
   }
-  .search.stick, body.fullscreen .search {
-    & + .preview {
-      margin-top: 100px;
+
+  body.fullscreen {
+    .close-search {
+      transition: all ease .3s;
+
+      .search {
+        transform: translateY(-40px);
+      }
     }
   }
 }
